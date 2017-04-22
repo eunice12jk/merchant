@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= f.label :price %>
-    <%= f.text_field :price, "Price (like 2.99)" %></div>
+    <%= f.text_field :price %></div>
   </div>
 
   <div class="field">
@@ -31,7 +31,13 @@
     <%= f.text_field :image_url %>
   </div>
 
+  <div class="field">
+    <%= f.label :stock %>
+    <%= f.text_field :stock %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
+  
 <% end %>

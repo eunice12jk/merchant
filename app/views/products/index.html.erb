@@ -8,6 +8,7 @@
       <th>Image</th>
       <th>Title</th>
       <th>Price</th>
+      <th>Stock</th>
      
     </tr>
   </thead>
@@ -18,6 +19,8 @@
         <td><%= image_tag "products/#{product.image_url}" %></td>
         <td><span class="product_title"><%= product.title %></span><%= product.description %></td>
         <td><%= print_price(product.price) %></td>
+        <td><%= print_stock(product.stock) %></td>
+
       </tr>
     
     <% end %>
@@ -26,5 +29,9 @@
 
 <br>
 
-<%= link_to 'Product', product_path(product) %>
-<%= link_to 'Create a New Product', new_product_path, id: "new_prodct_path" %>
+
+<p><%= link_to "Create a New Product", new_product_path, id: "new_product" %></p>
+
+
+
+
