@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        format.html { redirect_to @order, notice: 'Successfully added product to cart.' }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new }
@@ -49,10 +49,15 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
+    session[:id] = nil
   end
 
   # DELETE /orders/1
   # DELETE /orders/1.json
+  def confirm
+    #redirect_to root_url, notice: 'Your order has been processed'
+  end
+
   def destroy
     @order.destroy
     respond_to do |format|
@@ -69,6 +74,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:user_id, :status)
+      params.require(:order).permit(:user_id, :status, :address_id)
     end
 end

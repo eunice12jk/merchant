@@ -1,5 +1,10 @@
 class OrderItem < ApplicationRecord
 	belongs_to :order
-	belongs_to_many :products
-	validates :quantity, presence: true, :numericality { only_interger: true, greater_than: 0 }
+	has_many :product
+	validates :order_id, :product_id, presence: true
+	validates :quantity, numericality: {greater_than_or_equal_to: 1, only_integer: true}
+
+	def subtotal
+		self.quantity * self.product.price
+	end
 end

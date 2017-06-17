@@ -3,19 +3,6 @@ class OrderItemsController < ApplicationController
 
   # GET /order_items
   # GET /order_items.json
-  def index
-    @order_items = OrderItem.all
-  end
-
-  # GET /order_items/1
-  # GET /order_items/1.json
-  def show
-  end
-
-  # GET /order_items/new
-  def new
-    @order_item = OrderItem.new
-  end
 
   # GET /order_items/1/edit
   def edit
@@ -24,8 +11,8 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
-    @order_item = OrderItem.new(order_item_params)
-
+    @order_item = @order.order_items.find_or_initialize_by(product_id: params[:product_id], order_id: @order.id)
+    @order_item += 1
     respond_to do |format|
       if @order_item.save
         format.html { redirect_to @order_item, notice: 'Order item was successfully created.' }
@@ -41,7 +28,11 @@ class OrderItemsController < ApplicationController
   # PATCH/PUT /order_items/1.json
   def update
     respond_to do |format|
-      if @order_item.update(order_item_params)
+      @order_item = OrderItem.find(params[:id])
+      if params[:order_item][:quantity].to_i == 0
+        @order_item.destroy
+        format.html { redirect_to order_url(session[:id]), notice: 'Order item was successfully destroyed'}
+      elsif @order_item.update(order_item_params)
         format.html { redirect_to @order_item, notice: 'Order item was successfully updated.' }
         format.json { render :show, status: :ok, location: @order_item }
       else
@@ -63,6 +54,17 @@ class OrderItemsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    
+  def load_order
+    @order = Order.find_or_initialize_by_id(session[:order_id], status: "unsubmitted")
+    if @order.new_record?
+      @order.save!
+      session[:order_id] = @order.id
+    end
+
+  end
+
+
     def set_order_item
       @order_item = OrderItem.find(params[:id])
     end
