@@ -61,11 +61,15 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+      format.html { redirect_to products_path, notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
+  def empty
+    #@orderitems.destroy do |order_items| 
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order

@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
 	validates_numericality_of :price
-	validates :stock, :numericality, {:only_interger true, :greater_than_or_equals_to_zero}
+
+	#validates :stock, :numericality, {:only_integer true, :greater_than_or_equals_to_zero}
     has_many :order_items
     belongs_to :category
 
@@ -15,7 +16,4 @@ class Product < ApplicationRecord
     	#else 
     		#all.order(created_at DESC)
     	#end
-
-
-
 end
